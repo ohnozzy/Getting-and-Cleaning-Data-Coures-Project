@@ -3,6 +3,7 @@ run_analysis<-function(row=-1){
  #Y_train<-read.csv("train/Y_train.txt", FALSE)
  features<-read_feature()
  selected_column_vector<-grep("((mean\\(\\))|(std\\(\\)))", features[,2], value=TRUE)
+ selected_column_vector<-gsub("\\(\\)", "", selected_column_vector)
  select_filter<-32*grepl("((mean\\(\\))|(std\\(\\)))", features[,2])-16
  #nrow(features)
  X_train<-read.fwf("train/X_train.txt",  select_filter,FALSE, n=row, col.names=selected_column_vector, colClasses=rep("numeric",66))
@@ -28,7 +29,7 @@ run_analysis<-function(row=-1){
  data
 }
 read_feature<-function(){
-  read.table("features.txt", FALSE, sep=" ", colClasses=c("numeric", "character"))
+  read.table("features.txt", FALSE, sep=" ", colClasses=c("numeric", "character"), encoding="UTF-8")
 }
 read_activity<-function(){
   read.table("activity_labels.txt", FALSE, sep=" ", col.names=c("ActivityID","Activity"))
